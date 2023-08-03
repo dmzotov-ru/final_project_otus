@@ -4,3 +4,4 @@ backend.tf
 kubeconfig
 ca.pem
 .terraform
+ca.pem

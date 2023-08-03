@@ -1,0 +1,9 @@
+cloud_id                 = "your_cloud_id"
+folder_id                = "your_folder_id"
+service_account_key_file = "../../key.json"
+gitlab_disk_image        = "fd8s1rt9rlesqptbevhg" # ubuntu 20.04
+subnet_id                = "your_subnet_id"
+private_key_path         = "~/.ssh/id_rsa"
+public_key_path          = "~/.ssh/id_rsa.pub"
+network_id               = "your_network_id"
+sa_id                    = "your_service_account_id"
