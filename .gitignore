@@ -1,0 +1,6 @@
+terraform.tfvars
+sa-otus-key.json
+backend.tf
+kubeconfig
+ca.pem
+.terraform

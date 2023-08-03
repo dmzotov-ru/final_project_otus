@@ -1,0 +1,31 @@
+---
+#grafana
+#Prometeus
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: grafana
+  labels:
+    app: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      name: grafana
+      labels:
+        app: grafana
+    spec:
+      terminationGracePeriodSeconds: 30
+      hostname: grafana
+      containers:
+      - name: grafana
+        image: dmzotovpull/grafana:${IMAGE_TAG}
+        imagePullPolicy: "Always"
+        env:
+        - name: GF_SERVER_ROOT_URL
+          value: "http://localhost:3000/grafana"
+        - name: GF_SERVER_SERVE_FROM_SUB_PATH
+          value: 'true'

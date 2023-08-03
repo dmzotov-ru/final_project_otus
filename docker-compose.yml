@@ -1,0 +1,33 @@
+version: '3.3'
+
+services:
+  mongodb:
+    image: mongo:5.0
+    container_name: mongo
+    volumes:
+      - ~/apps/mongo:/data/db
+  rabbitmq:
+    image: 'rabbitmq:3.6-management-alpine'
+    container_name: rabbit
+  crawler:
+    build: ./search_engine_crawler
+    container_name: crawler
+    environment:
+      - EXCLUDE_URLS=.*github.com
+  ui:
+    build: ./search_engine_ui
+    container_name: ui
+    ports:
+      - '8080:8000'
+  
+  prometheus:
+    build: ./prometheus
+    container_name: 'prometheus'
+  
+  grafana:
+    build: ./grafana
+    container_name: 'grafana'
+    ports:
+      - '3000:3000'
+    links:
+      - prometheus

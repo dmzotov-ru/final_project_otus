@@ -1,0 +1,27 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: prometheus
+  labels:
+    app: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      name: prometheus
+      labels:
+        app: prometheus
+    spec:
+      hostname: prometheus
+      containers:
+      - name: prometheus
+        image: dmzotovpull/prometheus:${IMAGE_TAG}
+        env:
+        - name: ui
+          value: ui
+        - name: crawler
+          value: crawler

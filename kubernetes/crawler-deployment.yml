@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crawler
+  labels:
+    app: crawler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crawler
+  template:
+    metadata:
+      name: crawler
+      labels:
+        app: crawler
+    spec:
+      hostname: crawler
+      terminationGracePeriodSeconds: 30
+      containers:
+      - name: crawler
+        image: dmzotovpull/crawler:${IMAGE_TAG}
+        name: crawler
+        imagePullPolicy: "Always"
+        env:
+        - name: EXCLUDE_URLS
+          value: .*github.com
+        - name: MONGO
+          value: "mongo"
+        - name: MONGO_PORT
+          value: "27017"

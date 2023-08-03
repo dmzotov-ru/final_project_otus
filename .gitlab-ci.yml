@@ -1,0 +1,50 @@
+stages:
+  - build
+  - test
+  - review 
+  - production
+  - cleanup
+
+build_image_job:
+  stage: build
+  script:
+    - docker-compose up -d
+
+test_ui_job:
+  stage: test
+  script:
+    - curl -I http://localhost:8080 |grep "HTTP/1.1 200 OK"
+    
+test_unit_ui_job:
+  stage: test
+  script:
+    - docker exec ui python -m unittest discover -s /app/tests/
+
+test_unit_crawler_job:
+  stage: test
+  script:
+    - docker exec crawler python -m unittest discover -s /app/tests/
+
+deploy_dev_job:
+  stage: review
+  script:
+    - /bin/bash ./files/deploy_development_job.sh
+  environment: 
+    name: dev 
+    url: http://dev.otus.space
+
+deploy_production_job: 
+  stage: production
+  only:
+    - main
+  script: 
+    - /bin/bash ./files/deploy_production_job.sh
+  environment: 
+    name: production 
+    url: http://otus.space 
+
+cleanup_job:
+  stage: cleanup
+  script:
+    - docker-compose down --rm local
+  when: always

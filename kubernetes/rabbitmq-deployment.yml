@@ -1,0 +1,21 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbit
+  labels:
+    app: rabbit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbit
+  template:
+    metadata:
+      name: rabbit
+      labels:
+        app: rabbit
+    spec:
+      containers:
+      - image: rabbitmq:3.6-management-alpine
+        name: rabbit
